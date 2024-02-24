@@ -61,3 +61,17 @@ export const signOut = async ()=>{
         throw new Error("Error during sign out");
     }
 }
+
+export const addMyBeverage = async (beverageFormData: FormData)=>{
+    const response = await fetch(`${API_BASE_URL}/api/my-beverages`, {
+        method: "POST",
+        credentials: "include",
+        body: beverageFormData,
+    });
+
+    if(!response.ok){
+        throw new Error("Failed to add the beverage");
+    }
+
+    return response.json();
+}
