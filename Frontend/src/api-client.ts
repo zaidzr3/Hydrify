@@ -1,5 +1,6 @@
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
+import {BeverageType} from '../../Backend/src/models/beverage'
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
@@ -71,6 +72,44 @@ export const addMyBeverage = async (beverageFormData: FormData)=>{
 
     if(!response.ok){
         throw new Error("Failed to add the beverage");
+    }
+
+    return response.json();
+}
+
+export const fetchMyBeverages = async (): Promise<BeverageType[]> => {
+    const response = await fetch(`${API_BASE_URL}/api/my-beverages`,{
+    credentials: "include"
+    });
+
+    if(!response.ok){
+        throw new Error("Error fetching Beverages");
+    }
+
+    return response.json();
+}
+
+export const fetchMyBeverageById = async (beverageId: string): Promise<BeverageType>=>{
+    const response = await fetch(`${API_BASE_URL}/api/my-beverages/${beverageId}`, {
+        credentials: "include"
+    });
+
+    if(!response.ok){
+        throw new Error("Error fetching Beverages");
+    }
+
+    return response.json();
+}
+
+export const updateMyBeverageById = async(beverageFormData: FormData)=>{
+    const response = await fetch(`${API_BASE_URL}/api/my-beverages/${beverageFormData.get("beverageId")}`,{
+        method: "PUT",
+        body: beverageFormData,
+        credentials: "include"
+    });
+
+    if(!response.ok){
+        throw new Error("Failed to update Beverages");
     }
 
     return response.json();

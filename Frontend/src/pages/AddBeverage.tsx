@@ -3,15 +3,15 @@ import ManageBeverageForm from "../forms/ManageBeverageForm/ManageBeverageForm";
 import { useAppContext } from "../contexts/AppContext";
 import * as apiClient from "../api-client";
 
-const AddHotel = () => {
+const AddBeverage = () => {
   const { showToast } = useAppContext();
 
   const { mutate, isLoading } = useMutation(apiClient.addMyBeverage, {
     onSuccess: () => {
-      showToast({ message: "Hotel Saved!", type: "SUCCESS" });
+      showToast({ message: "Beverage Saved!", type: "SUCCESS" });
     },
     onError: () => {
-      showToast({ message: "Error Saving Hotel", type: "ERROR" });
+      showToast({ message: "Error Saving Beverage", type: "ERROR" });
     },
   });
 
@@ -22,4 +22,4 @@ const AddHotel = () => {
   return <ManageBeverageForm onSave={handleSave} isLoading={isLoading} />;
 };
 
-export default AddHotel;
+export default AddBeverage;

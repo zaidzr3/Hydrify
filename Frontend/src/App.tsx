@@ -9,6 +9,8 @@ import Register from "./pages/Register";
 import SignIn from "./pages/SignIn";
 import AddBeverage from "./pages/AddBeverage";
 import { useAppContext } from "./contexts/AppContext";
+import MyBeverages from "./pages/MyBeverages";
+import EditBeverage from "./pages/EditBeverage";
 
 const App = () => {
   const {isLoggedIn} = useAppContext();
@@ -53,7 +55,20 @@ const App = () => {
               <AddBeverage/>
             </Layout>
           }/>
-        </>)}
+
+          <Route path="/my-beverages" element ={
+            <Layout>
+              <MyBeverages/>
+            </Layout>
+          }/>
+
+          <Route path="/edit-beverage/:beverageId" element ={
+            <Layout>
+              <EditBeverage/>
+            </Layout>
+          }/>
+        </>
+        )}
         <Route path="*" element={<Navigate to="/"></Navigate>}></Route>
       </Routes>
     </Router>

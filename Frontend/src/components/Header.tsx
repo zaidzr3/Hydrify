@@ -21,7 +21,7 @@ const Header = () => {
                     </Link>
                     <Link 
                     className="text-sm text-gray-200 bg-teal-500 px-4 py-2 rounded-lg font-semibold hover:bg-teal-600 transition-colors duration-300 ease-in-out"
-                    to = "/my-products">My Products</Link>
+                    to = "/my-Beverages">My Products</Link>
                     <SignOutButton></SignOutButton>
                     
                     </>) : (

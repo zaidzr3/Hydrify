@@ -47,6 +47,66 @@ router.post("/",verifyToken, [
     }
 );
 
+router.get("/", verifyToken, async (req: Request, res: Response) => {
+    try {
+      const beverages = await Beverage.find({ userId: req.userId });
+      res.json(beverages);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching beverages" });
+    }
+  });
+
+router.get("/:id", verifyToken, async (req: Request, res: Response) => {
+    const id = req.params.id.toString();
+    try {
+      const beverage = await Beverage.findOne({
+        _id: id,
+        userId: req.userId,
+      });
+      res.json(beverage);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching beverages" });
+    }
+  });
+  
+  router.put(
+    "/:beverageId",
+    verifyToken,
+    upload.array("imageFiles"),
+    async (req: Request, res: Response) => {
+      try {
+        const updatedBeverage: BeverageType = req.body;
+        updatedBeverage.lastUpdated = new Date();
+  
+        const beverage = await Beverage.findOneAndUpdate(
+          {
+            _id: req.params.beverageId,
+            userId: req.userId,
+          },
+          updatedBeverage,
+          { new: true }
+        );
+  
+        if (!beverage) {
+          return res.status(404).json({ message: "Beverage not found" });
+        }
+  
+        const files = req.files as Express.Multer.File[];
+        const updatedImageUrls = await uploadImages(files);
+  
+        beverage.imageUrls = [
+          ...updatedImageUrls,
+          ...(updatedBeverage.imageUrls || []),
+        ];
+  
+        await beverage.save();
+        res.status(201).json(beverage);
+      } catch (error) {
+        res.status(500).json({ message: "Something went throw" });
+      }
+    }
+  );
+
 async function uploadImages(imageFiles: Express.Multer.File[]) {
     const uploadPromises = imageFiles.map(async (image) => {
       const b64 = Buffer.from(image.buffer).toString("base64");
