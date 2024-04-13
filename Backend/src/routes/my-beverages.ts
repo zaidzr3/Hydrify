@@ -17,12 +17,17 @@ const upload = multer({
     
 router.post("/",verifyToken, [
     body("name").notEmpty().withMessage('Name is required'),
-    body("city").notEmpty().withMessage('City is required'),
+    body("foodType").notEmpty().withMessage('foodType is required'),
     body("country").notEmpty().withMessage('Country is required'),
     body("description").notEmpty().withMessage('Description is required'),
-    body("type").notEmpty().withMessage('Type is required'),
-    body("pricePerNight").notEmpty().isNumeric().withMessage('price per night is required and must be a number'),
-    body("facilities").notEmpty().isArray().withMessage('Fcilities are required'),    
+    body("flavor").notEmpty().withMessage('Flavor is required'),
+    body("price").notEmpty().isNumeric().withMessage('price is required and must be a number'),
+    body("caloriesPerServing").notEmpty().isNumeric().withMessage('Calories per serving is required and must be a number'),
+    body("numberOfServings").notEmpty().isNumeric().withMessage('Number of Servings per beverage is required and must be a number'),
+    body("nutritionalFacts").notEmpty().isArray().withMessage('nutritionalFacts are required'),
+    body("seller").notEmpty().withMessage('Seller is required'),
+    body("dietType").notEmpty().withMessage('Diet Type is required'),
+    
     ],
     upload.array("imageFiles", 6), async(req: Request, res:Response) => {
         try{
@@ -69,11 +74,11 @@ router.get("/:id", verifyToken, async (req: Request, res: Response) => {
     }
   });
   
-  router.put(
-    "/:beverageId",
-    verifyToken,
-    upload.array("imageFiles"),
-    async (req: Request, res: Response) => {
+router.put(
+  "/:beverageId",
+  verifyToken,
+  upload.array("imageFiles"),
+  async (req: Request, res: Response) => {
       try {
         const updatedBeverage: BeverageType = req.body;
         updatedBeverage.lastUpdated = new Date();

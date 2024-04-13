@@ -1,26 +1,32 @@
 import { FormProvider, useForm } from "react-hook-form";
 import DetailsSection from "./DetailsSection";
-import TypeSection from "./TypeSection";
-import FacilitiesSection from "./FacilitiesSection";
-import GuestsSection from "./GuestsSection";
+import FlavorSection from "./FlavorSection";
+import NutritionalFactsSection from "./NutritionalFactsSection";
+import CaloriesSection from "./CaloriesSection";
 import ImagesSection from "./ImagesSection";
 import { BeverageType } from "../../../../Backend/src/models/beverage";
 import { useEffect } from "react";
 
 
+
 export type BeverageFormData = {
-    name: string;
-    city: string;
-    country: string;
-    description: string;
-    type: string;
-    pricePerNight: number;
-    starRating: number;
-    facilities: string[];
-    imageFiles: FileList;
-    imageUrls: string[];
-    adultCount: number;
-    childCount: number;
+  _id: string;
+  userId: string;
+  name: string;
+  foodType: string;
+  country: string;
+  description: string;
+  flavor: string;
+  numberOfServings: number;
+  caloriesPerServing: number;
+  nutritionalFacts: string[];
+  price: number;
+  starRating: number;
+  imageUrls: string[];
+  imageFiles: FileList;
+  lastUpdated: Date;
+  seller: string;
+  dietType: string;
 }
 
 type Props = {
@@ -45,17 +51,19 @@ type Props = {
       }
       
       formData.append("name", formDataJson.name);
-      formData.append("city", formDataJson.city);
+      formData.append("foodType", formDataJson.foodType);
       formData.append("country", formDataJson.country);
       formData.append("description", formDataJson.description);
-      formData.append("type", formDataJson.type);
-      formData.append("pricePerNight", formDataJson.pricePerNight.toString());
+      formData.append("flavor", formDataJson.flavor);
+      formData.append("price", formDataJson.price.toString());
       formData.append("starRating", formDataJson.starRating.toString());
-      formData.append("adultCount", formDataJson.adultCount.toString());
-      formData.append("childCount", formDataJson.childCount.toString());
+      formData.append("numberOfServings", formDataJson.numberOfServings.toString());
+      formData.append("caloriesPerServing", formDataJson.caloriesPerServing.toString());
+      formData.append("seller", formDataJson.seller);
+      formData.append("dietType", formDataJson.dietType);
   
-      formDataJson.facilities.forEach((facility, index) => {
-        formData.append(`facilities[${index}]`, facility);
+      formDataJson.nutritionalFacts.forEach((nutritionalFact, index) => {
+        formData.append(`nutritionalFacts[${index}]`, nutritionalFact);
       });
       
 
@@ -76,9 +84,9 @@ type Props = {
       <FormProvider {...formMethods}>
         <form className="flex flex-col gap-10" onSubmit={onSubmit}>
           <DetailsSection />
-          <TypeSection />
-          <FacilitiesSection />
-          <GuestsSection />
+          <FlavorSection />
+          <NutritionalFactsSection />
+          <CaloriesSection />
           <ImagesSection />
           <span className="flex justify-end">
             <button

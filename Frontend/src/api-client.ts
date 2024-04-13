@@ -1,6 +1,7 @@
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
 import {BeverageType} from '../../Backend/src/models/beverage'
+import { BeverageSearchResponse } from "../../backend/src/shared/types";
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
@@ -113,4 +114,64 @@ export const updateMyBeverageById = async(beverageFormData: FormData)=>{
     }
 
     return response.json();
-}
+};
+
+export type SearchParams = {
+    name?: string;
+    seller?: string;
+    caloriesPerServing?: string;
+    page?: string;
+    nutritionalFacts?: string[];
+    flavors?: string[];
+    stars?: string[];
+    maxPrice?: string;
+    sortOption?: string;
+};
+
+
+export const searchBeverages = async (
+    searchParams: SearchParams
+  ): Promise<BeverageSearchResponse> => {
+    const queryParams = new URLSearchParams();
+    queryParams.append("name", searchParams.name || "");
+    queryParams.append("seller", searchParams.seller || "");
+    queryParams.append("caloriesPerServing", searchParams.caloriesPerServing || "");
+    queryParams.append("page", searchParams.page || "");
+  
+    queryParams.append("maxPrice", searchParams.maxPrice || "");
+    queryParams.append("sortOption", searchParams.sortOption || "");
+  
+    searchParams.nutritionalFacts?.forEach((nutritionalFact) =>
+      queryParams.append("nutritionalFacts", nutritionalFact)
+    );
+  
+    searchParams.flavors?.forEach((flavor) => queryParams.append("flavors", flavor));
+    searchParams.stars?.forEach((star) => queryParams.append("stars", star));
+  
+    const response = await fetch(
+      `${API_BASE_URL}/api/beverages/search?${queryParams}`
+    );
+  
+    if (!response.ok) {
+      throw new Error("Error fetching beverages");
+    }
+  
+    return response.json();
+  };
+  
+  export const fetchBeverages = async (): Promise<BeverageType[]> => {
+    const response = await fetch(`${API_BASE_URL}/api/beverages`);
+    if (!response.ok) {
+      throw new Error("Error fetching beverges");
+    }
+    return response.json();
+  };
+  
+  export const fetchBeverageById = async (beverageId: string): Promise<BeverageType> => {
+    const response = await fetch(`${API_BASE_URL}/api/beverages/${beverageId}`);
+    if (!response.ok) {
+      throw new Error("Error fetching Beverages");
+    }
+  
+    return response.json();
+  };

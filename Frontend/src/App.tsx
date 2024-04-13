@@ -11,23 +11,42 @@ import AddBeverage from "./pages/AddBeverage";
 import { useAppContext } from "./contexts/AppContext";
 import MyBeverages from "./pages/MyBeverages";
 import EditBeverage from "./pages/EditBeverage";
+import Search from "./pages/Search";
+import Detail from "./pages/Detail";
+import Home from "./pages/Home";
+import CalorieCalculator from "./pages/CalorieCalculator";
 
 const App = () => {
   const {isLoggedIn} = useAppContext();
   return(
     <Router>
       <Routes>
+
         <Route path="/" 
         element={
         <Layout>
-          <p>Home Page</p>
+          <Home/>
+        </Layout>
+        }></Route>
+
+        <Route path="/calorieCalculator" 
+        element={
+          <Layout>
+          <CalorieCalculator/>
         </Layout>
         }></Route>
         
         <Route path="/search" 
         element={
           <Layout>
-          <p>Search Page</p>
+          <Search/>
+        </Layout>
+        }></Route>
+
+        <Route path="/detail/:beverageId" 
+        element={
+          <Layout>
+          <Detail/>
         </Layout>
         }></Route>
 

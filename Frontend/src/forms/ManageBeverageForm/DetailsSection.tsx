@@ -24,16 +24,41 @@ const DetailsSection = () => {
 
       <div className="flex gap-4">
         <label className="text-gray-700 text-sm font-bold flex-1">
-          City
+          Food Type
           <input
             type="text"
             className="border rounded w-full py-1 px-2 font-normal"
-            {...register("city", { required: "This field is required" })}
+            {...register("foodType", { required: "This field is required" })}
           ></input>
-          {errors.city && (
-            <span className="text-red-500">{errors.city.message}</span>
+          {errors.foodType && (
+            <span className="text-red-500">{errors.foodType.message}</span>
           )}
         </label>
+
+        <label className="text-gray-700 text-sm font-bold flex-1">
+          Seller
+          <input
+            type="text"
+            className="border rounded w-full py-1 px-2 font-normal"
+            {...register("seller", { required: "This field is required" })}
+          ></input>
+          {errors.seller && (
+            <span className="text-red-500">{errors.seller.message}</span>
+          )}
+        </label>
+
+        <label className="text-gray-700 text-sm font-bold flex-1">
+          Diet Type
+          <input
+            type="text"
+            className="border rounded w-full py-1 px-2 font-normal"
+            {...register("dietType", { required: "This field is required" })}
+          ></input>
+          {errors.dietType && (
+            <span className="text-red-500">{errors.dietType.message}</span>
+          )}
+        </label>
+
         <label className="text-gray-700 text-sm font-bold flex-1">
           Country
           <input
@@ -45,6 +70,7 @@ const DetailsSection = () => {
             <span className="text-red-500">{errors.country.message}</span>
           )}
         </label>
+
       </div>
       <label className="text-gray-700 text-sm font-bold flex-1">
         Description
@@ -58,15 +84,15 @@ const DetailsSection = () => {
         )}
       </label>
       <label className="text-gray-700 text-sm font-bold max-w-[50%]">
-        Price Per Night
+        Price
         <input
           type="number"
           min={1}
           className="border rounded w-full py-1 px-2 font-normal"
-          {...register("pricePerNight", { required: "This field is required" })}
+          {...register("price", { required: "This field is required" })}
         ></input>
-        {errors.pricePerNight && (
-          <span className="text-red-500">{errors.pricePerNight.message}</span>
+        {errors.price && (
+          <span className="text-red-500">{errors.price.message}</span>
         )}
       </label>
       <label className="text-gray-700 text-sm font-bold max-w-[50%]">
